@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../models/producys_models.dart';
 
 class ProductProvider with ChangeNotifier {
-
   static final List<ProductModels> _products = [];
   Future<void> fetchData() async {
     await FirebaseFirestore.instance

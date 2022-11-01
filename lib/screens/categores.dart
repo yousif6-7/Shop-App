@@ -43,6 +43,22 @@ class Categories extends StatelessWidget {
 
     List<ProductModels> allproducts = productProviders.getproductList;
 
+    List<ProductModels> cats = [];
+    //i used tmp cats b/c dart doesnt allow us to modify elements while iterating through them
+    List<ProductModels> tmpCats = [];
+    for (ProductModels product in allproducts) {
+      //first check if categories are not empty if so , atleast we have to add 1 item to it
+      if (cats.isNotEmpty) {
+        //if it is not we have to make sure that if the selected product is not in our category list
+        for (ProductModels cat in cats) {
+          if (product.productcat != cat.productcat) tmpCats.add(product);
+        }
+      } else {
+        cats.add(product);
+      }
+    }
+    cats.addAll(tmpCats);
+    print(cats[0].title);
     return Scaffold(
       appBar: AppBar(
         title: ReusibleText(
@@ -54,13 +70,12 @@ class Categories extends StatelessWidget {
       ),
       body: ListView.builder(
         //shrinkWrap: true,
-        itemCount: gridList.length,
-        itemBuilder: ((context, index) => 
-           ChangeNotifierProvider.value(
-              value:allproducts[index],
+        itemCount: cats.length,
+        itemBuilder: ((context, index) => ChangeNotifierProvider.value(
+              value: allproducts[index],
               child: CategoriesWidth(
-                gridimgpath: allproducts[index].imageUrl,
-                gridText:"",
+                gridimgpath: cats[index].imageUrl,
+                gridText: cats[index].productcat,
               ),
             )),
       ),

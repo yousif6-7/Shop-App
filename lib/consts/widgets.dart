@@ -59,7 +59,7 @@ class ReusibleText extends StatelessWidget {
   final String text;
   double? size;
   FontWeight? textfontWeight;
-     int maxLines = 2 ;
+  int maxLines = 2;
 
   ReusibleText({
     Key? key,
@@ -85,7 +85,6 @@ class ReusibleText extends StatelessWidget {
   }
 }
 
-
 class CategoriesWidth extends StatefulWidget {
   const CategoriesWidth({
     Key? key,
@@ -108,9 +107,9 @@ class _CategoriesWidthState extends State<CategoriesWidth> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: (){
-          Navigator.pushNamed(context, "SubCategories",arguments: widget.gridText);
-
+        onTap: () {
+          Navigator.pushNamed(context, "SubCategories",
+              arguments: widget.gridText);
         },
         child: Container(
           padding: EdgeInsets.only(right: 10),
@@ -119,7 +118,7 @@ class _CategoriesWidthState extends State<CategoriesWidth> {
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(widget. gridimgpath),
+              image: NetworkImage(widget.gridimgpath),
             ),
             borderRadius: BorderRadius.circular(20),
             color: themeState.getDarkTheme ? Color(0xFF335171) : Colors.white,

@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode _searchFocusNode = FocusNode();
   IconData? icon;
 
-
   @override
   void dispose() {
     _searchControlar.dispose();
@@ -104,10 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 20,
                 ),
               ),
-              SliderWidget(productModel: OnSaleProducts
-
-              ),
-              
+              SliderWidget(productModel: OnSaleProducts),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: ReusibleText(
@@ -145,7 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Row(
                           children: [
-                            
                             IconButton(
                               onPressed: () {
                                 Navigator.push(

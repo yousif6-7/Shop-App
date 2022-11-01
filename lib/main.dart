@@ -16,8 +16,7 @@ import 'package:shop_app/services/fetch_screen.dart';
 
 import 'consts/colors.dart';
 
- void main()  {
-
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -46,54 +45,64 @@ class _MyAppState extends State<MyApp> {
     getCurrentAppTheme();
     super.initState();
   }
-final Future<FirebaseApp>_firebaseinitization= Firebase.initializeApp();
+
+  final Future<FirebaseApp> _firebaseinitization = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future:_firebaseinitization,
-      builder:(context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+      future: _firebaseinitization,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-
-            home: Scaffold(body: Center(child: CircularProgressIndicator(),),),);
-        }else if(snapshot.hasError){
-                    return MaterialApp(home: Scaffold(body: Center(child: Text("An Error happend"),),),);
-
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text("An Error happend"),
+              ),
+            ),
+          );
         }
         return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => themeChangeProvider,
-          ),
-          ChangeNotifierProvider(
-            create: (_) => ProductProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => CartProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => WishListProvider(),
-          ),ChangeNotifierProvider(
-            create: (_) => GoogleSignInProvider(),
-          ),
-        ],
-        child:
-            Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: Style.themeData(themeProvider.getDarkTheme, context),
-            home: FetchScreen(),
-            routes: {
-              'ProductDetScreen': (context) => ProductDetScreen(),
-              'SubCategories': (context) => SubCategories(),
-            },
-          );
-        }),
-      );
-       },
-
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => themeChangeProvider,
+            ),
+            ChangeNotifierProvider(
+              create: (_) => ProductProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => CartProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => WishListProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => GoogleSignInProvider(),
+            ),
+          ],
+          child: Consumer<DarkThemeProvider>(
+              builder: (context, themeProvider, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: Style.themeData(themeProvider.getDarkTheme, context),
+              home: FetchScreen(),
+              routes: {
+                'ProductDetScreen': (context) => ProductDetScreen(),
+                'SubCategories': (context) => SubCategories(),
+              },
+            );
+          }),
+        );
+      },
     );
   }
 }

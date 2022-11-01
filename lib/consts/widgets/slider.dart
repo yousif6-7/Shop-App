@@ -11,8 +11,7 @@ import '../widgets.dart';
 class SliderWidget extends StatefulWidget {
   const SliderWidget({Key? key, required this.productModel}) : super(key: key);
 
-
- final List<ProductModels>  productModel ;
+  final List<ProductModels> productModel;
 
   @override
   State<SliderWidget> createState() => _SliderWidgetState();
@@ -66,7 +65,9 @@ class _SliderWidgetState extends State<SliderWidget> {
             }),
       ),
       DotsIndicator(
-        dotsCount: OnSaleProducts.length < 6 ? OnSaleProducts.length : 6,
+        dotsCount: OnSaleProducts.isNotEmpty
+            ? (OnSaleProducts.length < 6 ? OnSaleProducts.length : 6)
+            : 1,
         position: _currentpagevalue,
         decorator: DotsDecorator(
             activeColor:
@@ -113,7 +114,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         InkWell(
           onTap: () {
             Navigator.pushNamed(context, "ProductDetScreen",
-                arguments: widget. productModel[index].id);
+                arguments: widget.productModel[index].id);
           },
           child: Container(
             height: 200,
@@ -122,7 +123,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: NetworkImage(widget. productModel[index].imageUrl),
+                image: NetworkImage(widget.productModel[index].imageUrl),
               ),
             ),
           ),
@@ -141,7 +142,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Center(
                 child: ReusibleText(
-                  text: widget. productModel[index].title,
+                  text: widget.productModel[index].title,
                 ),
               ),
             ),
