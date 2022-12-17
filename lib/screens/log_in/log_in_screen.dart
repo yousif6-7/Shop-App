@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/consts/widgets.dart';
 import 'package:shop_app/consts/widgets/loading_manegar.dart';
 import 'package:shop_app/providers/google_sign_in_provider.dart';
@@ -9,7 +10,7 @@ import 'package:shop_app/screens/log_in/sign_up_screen.dart';
 import '../../consts/firebase_const.dart';
 import '../../services/fetch_screen.dart';
 import '../../services/methods.dart';
-import '../btm_nav_bar.dart';
+import '../tab_bar_screen.dart';
 import 'forget_password.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           textInputAction: TextInputAction.next,
                           controller: _emailController,
                           keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "aaaaa@gmail.com",
                             labelText: "email",
                             prefixIcon: Icon(Icons.email_outlined),
@@ -79,7 +80,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         TextFormField(
@@ -95,7 +96,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           decoration: InputDecoration(
                             hintText: 'Name12345',
                             labelText: "password",
-                            prefixIcon: Icon(Icons.lock_rounded),
+                            prefixIcon: const Icon(Icons.lock_rounded),
                             suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -103,8 +104,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                   });
                                 },
                                 child: _obscureText
-                                    ? Icon(Icons.visibility_rounded)
-                                    : Icon(Icons.visibility_off_rounded)),
+                                    ? const Icon(Icons.visibility_rounded)
+                                    : const Icon(Icons.visibility_off_rounded)),
                           ),
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
@@ -122,32 +123,32 @@ class _LogInScreenState extends State<LogInScreen> {
                         submetonlogin();
                       },
                       style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                      child: Text('LOGIN')),
+                      child: const Text('LOGIN')),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ForgetPasswordScreen(),
+                            builder: (context) => const ForgetPasswordScreen(),
                           ));
                     },
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                    child: Text('Forgot password ?'),
+                    child: const Text('Forgot password ?'),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an acount ?'),
+                      const Text('Don\'t have an acount ?'),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignUpScreen(),
+                              builder: (context) => const SignUpScreen(),
                             ),
                           );
                         },
-                        child: Text('SIGNUP'),
+                        child: const Text('SIGNUP'),
                       ),
                     ],
                   ),
@@ -157,7 +158,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                     googleProvider.googleSignIn(context);
+                      googleProvider.googleSignIn(context);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +167,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           'assets/images/clips/google.png',
                           height: 50,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         ReusibleText(text: 'Contenu with google'),
@@ -186,6 +187,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   void submetonlogin() async {
     final isValid = _formKey.currentState!.validate();
+
     FocusScope.of(context).unfocus();
     setState(() {
       isLoading = true;
@@ -197,8 +199,10 @@ class _LogInScreenState extends State<LogInScreen> {
         await authInstance.signInWithEmailAndPassword(
             email: _emailController.text.toLowerCase().trim(),
             password: _passwordController.text.trim());
+
+        if(!mounted)return;
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => FetchScreen()));
+            MaterialPageRoute(builder: (context) => const FetchScreen()));
       } on FirebaseAuthException catch (error) {
         Methods.ErrorDailog(subtitle: '${error.message}', context: context);
         setState(() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/models_provider.dart';
-import '../screens/btm_nav_bar.dart';
+import '../screens/tab_bar_screen.dart';
 
 class FetchScreen extends StatefulWidget {
   const FetchScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _FetchScreenState extends State<FetchScreen> {
   Future.delayed(Duration(microseconds: 5),() async{
     final productsProvider =  Provider.of<ProductProvider>(context,listen: false);
     await productsProvider.fetchData();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BtmNavBarScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> TabBarScreen()));
   });
    super.initState();
   }

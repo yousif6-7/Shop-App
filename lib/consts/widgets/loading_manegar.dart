@@ -14,15 +14,15 @@ class LoadingManegar extends StatelessWidget {
         child,
         isLoading
             ? Container(
-                color: Colors.black.withOpacity(0.7),
-              )
+          color: Colors.black.withOpacity(0.7),
+        )
             : Container(),
         isLoading
             ? Center(
-                child: SpinKitSpinningLines(
-                  color: Colors.white,
-                ),
-              )
+          child: SpinKitSpinningLines(
+            color: Colors.white,
+          ),
+        )
             : Container(),
       ],
     );

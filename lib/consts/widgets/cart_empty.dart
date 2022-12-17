@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/consts/widgets.dart';
-import 'package:shop_app/screens/home_screen.dart';
 
-import '../../screens/btm_nav_bar.dart';
+import '../../screens/tab_bar_screen.dart';
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen(
       {Key? key,
-      required this.imagepath,
-      required this.title,
-      required this.subtitle,
-      required this.text})
+        required this.imagepath,
+        required this.title,
+        required this.subtitle,
+      })
       : super(key: key);
   final String imagepath;
   final String title;
   final String subtitle;
-  final String text;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: SizedBox(
+          height: 500,
           child: Column(
             children: [
               Container(
+
                 margin: EdgeInsets.only(top: 20),
-                width: double.maxFinite,
+
                 child: Image.asset(
                   imagepath,
                   width: double.infinity,
@@ -53,11 +54,7 @@ class EmptyScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              ReusibleText(
-                text: text,
-                size: 16,
-                textfontWeight: FontWeight.w600,
-              ),
+
             ],
           ),
         ),

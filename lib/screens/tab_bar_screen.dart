@@ -2,80 +2,113 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/consts/widgets.dart';
-import 'package:shop_app/screens/categores.dart';
-import 'package:shop_app/screens/home_screen.dart';
 import 'package:shop_app/screens/user.dart';
-
+import '../provider/dark_theme_provider.dart';
 import '../providers/cart_provider.dart';
 import 'cart/cart_screen.dart';
+import 'categores.dart';
+import 'home_screen.dart';
 
-class BtmNavBarScreen extends StatefulWidget {
-  const BtmNavBarScreen({Key? key}) : super(key: key);
+class TabBarScreen extends StatefulWidget {
+  const TabBarScreen({Key? key}) : super(key: key);
 
   @override
-  State<BtmNavBarScreen> createState() => _BtmNavBarScreenState();
+  State<TabBarScreen> createState() => _TabBarScreenState();
 }
 
-class _BtmNavBarScreenState extends State<BtmNavBarScreen> {
-  int _selectedindex = 0;
+class _TabBarScreenState extends State<TabBarScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
+
+  @override
+  void initState() {
+    controller = TabController(length: _pages.length, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   final List _pages = [
     const HomeScreen(),
-    Categories(
-      gridText: '',
-    ),
+    Categories(),
     const Cart(),
     const Users(),
   ];
 
-  void _selectedscreen(int index) {
-    setState(() {
-      _selectedindex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final themeState = Provider.of<DarkThemeProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
-      body: _pages[_selectedindex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectedscreen,
-        currentIndex: _selectedindex,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(
-                  _selectedindex == 0 ? IconlyBold.home : IconlyLight.home),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(_selectedindex == 1
-                  ? IconlyBold.category
-                  : IconlyLight.category),
-              label: 'Categories'),
-          BottomNavigationBarItem(
-            icon: Badge(
-                toAnimate: true,
-                shape: BadgeShape.circle,
-                badgeColor: Colors.blue,
-                borderRadius: BorderRadius.circular(8),
-                badgeContent: FittedBox(
-                  child: Text(
-                     cartProvider.getCartItems.length.toString(),
-                    style: TextStyle(color: Colors.white),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 15,top: 40),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.maxFinite,
+                  child: TabBarView(
+                    controller: controller,
+                    children:  [
+                      HomeScreen(),
+                      Categories(),
+
+                      Cart(),
+                      Users(),
+                    ],
                   ),
                 ),
-                child: Icon(
-                    _selectedindex == 2 ? IconlyBold.buy : IconlyLight.buy)),
-            label: 'Cart',
+              ),
+              Container(
+                child: TabBar(
+                  labelColor: themeState.getDarkTheme
+                      ? const Color(0xFFececec)
+                      : const Color(0xFF00264D),
+                  unselectedLabelColor: const Color(0xFF8c8c8c),
+                  controller: controller,
+                  indicatorColor: Colors.transparent,
+                  isScrollable: false,
+                  tabs: [
+                    const Tab(
+                      icon: Icon(
+                        IconlyBold.home,size: 30,
+                      ),
+                    ),const Tab(
+                      icon: Icon(
+                        IconlyBold.category,size: 30,
+                      ),
+                    ),
+                    Tab(
+                      icon: Badge(
+                          toAnimate: true,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.blue,
+                          borderRadius: BorderRadius.circular(8),
+                          badgeContent: FittedBox(
+                            child: Text(
+                              cartProvider.getCartItems.length.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          child: const Icon(
+                              IconlyBold.buy,size: 30
+                          )),
+                    ),
+                    const Tab(
+                      icon: Icon(
+                          IconlyBold.setting,size: 30
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-                _selectedindex == 3 ? IconlyBold.user2 : IconlyLight.user2),
-            label: 'User',
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

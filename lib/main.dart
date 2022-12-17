@@ -6,8 +6,9 @@ import 'package:shop_app/provider/dark_theme_provider.dart';
 import 'package:shop_app/providers/cart_provider.dart';
 import 'package:shop_app/providers/google_sign_in_provider.dart';
 import 'package:shop_app/providers/models_provider.dart';
+import 'package:shop_app/providers/orders_provider.dart';
 import 'package:shop_app/providers/wish_list_provider.dart';
-import 'package:shop_app/screens/btm_nav_bar.dart';
+import 'package:shop_app/screens/tab_bar_screen.dart';
 import 'package:shop_app/screens/log_in/log_in_screen.dart';
 
 import 'package:shop_app/screens/product_det_screen.dart';
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
       future: _firebaseinitization,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
+          return const MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Scaffold(
               body: Center(
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyApp> {
             ),
           );
         } else if (snapshot.hasError) {
-          return MaterialApp(
+          return const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: Text("An Error happend"),
@@ -88,16 +89,19 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(
               create: (_) => GoogleSignInProvider(),
             ),
+            ChangeNotifierProvider(
+              create: (_) => OrdersProvider(),
+            ),
           ],
           child: Consumer<DarkThemeProvider>(
               builder: (context, themeProvider, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: Style.themeData(themeProvider.getDarkTheme, context),
-              home: FetchScreen(),
+              home:  LogInScreen(),
               routes: {
-                'ProductDetScreen': (context) => ProductDetScreen(),
-                'SubCategories': (context) => SubCategories(),
+                'ProductDetScreen': (context) => const ProductDetScreen(),
+                'SubCategories': (context) => const SubCategories(),
               },
             );
           }),

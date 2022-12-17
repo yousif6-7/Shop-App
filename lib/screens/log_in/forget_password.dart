@@ -21,7 +21,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     _emailController.dispose();
     super.dispose();
   }
-bool isLoading = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ bool isLoading = false;
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back_ios),
+                icon: const Icon(Icons.arrow_back_ios),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -49,14 +49,14 @@ bool isLoading = false;
                       size: 30,
                       textfontWeight: FontWeight.bold,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
                       textInputAction: TextInputAction.next,
                       controller: _emailController,
                       keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "aaaaa@gmail.com",
                         labelText: "email",
                         prefixIcon: Icon(Icons.email_outlined),
@@ -74,7 +74,7 @@ bool isLoading = false;
                         forgotPass(
                         );
                       },
-                      child: Text('Reset password'),
+                      child: const Text('Reset password'),
                     ),
                   ],
                 ),

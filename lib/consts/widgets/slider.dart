@@ -18,14 +18,7 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-  List<String> offersImages = [
-    'assets/images/shoes/shoe1.png',
-    'assets/images/dresses/dreaes1.png',
-    'assets/images/pants/pants1.jpeg',
-    'assets/images/shirts/shirts1.png',
-    'assets/images/suts/suts1.jpeg',
-    'assets/images/tshirts/tshirts1.jpeg',
-  ];
+
   PageController pageController = PageController(viewportFraction: 0.90);
   var _currentpagevalue = 0.0;
   double _ScaleFactor = 0.8;
@@ -59,19 +52,17 @@ class _SliderWidgetState extends State<SliderWidget> {
         height: 240,
         child: PageView.builder(
             controller: pageController,
-            itemCount: OnSaleProducts.length < 6 ? OnSaleProducts.length : 6,
+            itemCount:  OnSaleProducts.length ,
             itemBuilder: (context, index) {
               return _buildbodyitem(index, context);
             }),
       ),
       DotsIndicator(
-        dotsCount: OnSaleProducts.isNotEmpty
-            ? (OnSaleProducts.length < 6 ? OnSaleProducts.length : 6)
-            : 1,
+        dotsCount: OnSaleProducts.isEmpty ? 1 : OnSaleProducts.length,
         position: _currentpagevalue,
         decorator: DotsDecorator(
             activeColor:
-                themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
+            themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
             size: Size.square(9.0),
             activeSize: Size(18.0, 9.0),
             activeShape: RoundedRectangleBorder(

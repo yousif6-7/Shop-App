@@ -21,7 +21,6 @@ class _SubCatWidgetState extends State<SubCatWidget> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final ProductModelsvar = Provider.of<ProductModels>(context);
-    final product = Provider.of<ProductProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
 
     bool _isInCart = cartProvider.getCartItems.containsKey(ProductModelsvar.id);

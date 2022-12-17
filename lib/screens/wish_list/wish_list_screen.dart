@@ -20,11 +20,11 @@ class WishListScreen extends StatelessWidget {
         .reversed
         .toList();
     return wishlistItemsList.isEmpty
-        ? EmptyScreen(
+        ? const EmptyScreen(
       imagepath: 'assets/images/clips/history.png',
       title: 'Whoops',
       subtitle: 'Your History is empty for now ',
-      text: 'Start shopping now',
+
     )
         : Scaffold(
       appBar: AppBar(
@@ -36,9 +36,9 @@ class WishListScreen extends StatelessWidget {
         centerTitle: false,
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 10),
+            margin: const EdgeInsets.only(right: 10),
             width: 50,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
             ),
@@ -54,7 +54,7 @@ class WishListScreen extends StatelessWidget {
                     context: context,
                   );
                 },
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
               ),
             ),
           ),
@@ -64,8 +64,8 @@ class WishListScreen extends StatelessWidget {
           itemCount: wishlistItemsList.length,
           itemBuilder: (context, index) {
             return ChangeNotifierProvider.value(
-              value: wishlistItemsList[index],
-                child: WishListWidget());
+                value: wishlistItemsList[index],
+                child: const WishListWidget());
           }),
     );
   }

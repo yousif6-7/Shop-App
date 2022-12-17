@@ -38,21 +38,25 @@ class _CartWidgetState extends State<CartWidget> {
     final cartProvider = Provider.of<CartProvider>(context);
 
     final getCurrentProduct =
-        productProviders.findProductById(cartModelsvar.productid);
-    double usedPrice = getCurrentProduct.isOnSale
-        ? getCurrentProduct.salePrice
-        : double.parse(getCurrentProduct.price);
-    double totalPrice = usedPrice * int.parse(counter.toString());
+    productProviders.findProductById(cartModelsvar.productid);
+
+    int setOfThreeOfSameItem = counter ~/ 3;
+    double totalDiscount = 0.0;
+    double totalPrice = double.parse(getCurrentProduct.price.toString()) *
+        int.parse(counter.toString());
+
+    int discount = setOfThreeOfSameItem * int.parse(getCurrentProduct.price);
+    totalDiscount = totalPrice - discount;
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         width: double.maxFinite,
         height: 200,
         decoration: BoxDecoration(
           color:
-              themeState.getDarkTheme ? Color(0xFF335171) : Color(0xFF0ececec),
+          themeState.getDarkTheme ? const Color(0xFF335171) : const Color(0xFF0ececec),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -74,7 +78,7 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Column(
@@ -86,11 +90,11 @@ class _CartWidgetState extends State<CartWidget> {
                   size: 20,
                   textfontWeight: FontWeight.w500,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 _quantityControler(
-                  color: Color(0xFFececec),
+                  color: const Color(0xFFececec),
                   function1: () {
                     cartProvider.reduceCartByOne(getCurrentProduct.id);
                     setState(() {
@@ -113,7 +117,7 @@ class _CartWidgetState extends State<CartWidget> {
                   icon1: Icons.remove,
                   icon2: Icons.add,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Row(
@@ -123,7 +127,7 @@ class _CartWidgetState extends State<CartWidget> {
                       textfontWeight: FontWeight.bold,
                     ),
                     ReusibleText(
-                      text: '\$${totalPrice.toStringAsFixed(2)}',
+                      text: 'iq ${totalDiscount.toStringAsFixed(2)}',
                       size: 20,
                       textfontWeight: FontWeight.bold,
                     ),
@@ -131,14 +135,14 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Align(
               alignment: Alignment.topRight,
               child: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: Color(0xFFececec),
+                  color: const Color(0xFFececec),
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Center(
@@ -146,7 +150,7 @@ class _CartWidgetState extends State<CartWidget> {
                     onPressed: () {
                       cartProvider.removeOneItem(getCurrentProduct.id);
                     },
-                    icon: Icon(Icons.remove_shopping_cart_rounded),
+                    icon: const Icon(Icons.remove_shopping_cart_rounded),
                   ),
                 ),
               ),
@@ -188,16 +192,16 @@ class _CartWidgetState extends State<CartWidget> {
                       icon: Icon(
                         icon1,
                         color: themeState.getDarkTheme
-                            ? Color(0xFF335171)
-                            : Color(0xFF001B36),
+                            ? const Color(0xFF335171)
+                            : const Color(0xFF001B36),
                       )),
                   Text(
                     '${counter.toString()}',
                     style: TextStyle(
-                      color: themeState.getDarkTheme
-                          ? Color(0xFF335171)
-                          : Color(0xFF001B36),
-                      fontSize: 25
+                        color: themeState.getDarkTheme
+                            ? const Color(0xFF335171)
+                            : const Color(0xFF001B36),
+                        fontSize: 25
                     ),
                   ),
                   IconButton(
@@ -207,8 +211,8 @@ class _CartWidgetState extends State<CartWidget> {
                     icon: Icon(
                       icon2,
                       color: themeState.getDarkTheme
-                          ? Color(0xFF335171)
-                          : Color(0xFF001B36),
+                          ? const Color(0xFF335171)
+                          : const Color(0xFF001B36),
                     ),
                   )
                 ],

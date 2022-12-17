@@ -1,60 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/consts/widgets/cart_empty.dart';
-import 'package:shop_app/screens/orders/orders_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../consts/widgets.dart';
-import '../../services/methods.dart';
+import '../../consts/widgets/cart_empty.dart';
+import '../../provider/dark_theme_provider.dart';
 
-class OrdersScreen extends StatelessWidget {
+import '../../providers/orders_provider.dart';
+import '../../services/methods.dart';
+import 'orders_widget.dart';
+
+class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
 
   @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  @override
   Widget build(BuildContext context) {
-    bool _isEmpty = true;
-    return _isEmpty == true
-        ? EmptyScreen(
-            imagepath: 'assets/images/clips/orders.png',
-            title: 'Whoops',
-            subtitle: 'You dont have any ordrs till now ',
-            text: 'Start shopping now',
-          )
+    final themeState = Provider.of<DarkThemeProvider>(context);
+
+    final orderProvider = Provider.of<OrdersProvider>(context);
+    final ordersList =
+    orderProvider.getOrderItems.values.toList().reversed.toList();
+    return ordersList.isEmpty
+        ? const EmptyScreen(
+      imagepath: 'assetts/clips/orders.png',
+      title: 'Whoops',
+      subtitle: 'You dont have any ordrs till now ',
+
+    )
         : Scaffold(
-            appBar: AppBar(
-              title: ReusibleText(
-                text: 'Orders(2)',
-                size: 20,
-                textfontWeight: FontWeight.bold,
-              ),
-              centerTitle: false,
-              actions: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  width: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: Center(
-                    child: IconButton(
-                      onPressed: () {
-                        Methods.warningDialog(
-                          title: "Clear ?",
-                          subtitle: "Do you want to  clear your orders list ?",
-                          function: () {},
-                          context: context,
-                        );
-                      },
-                      icon: Icon(Icons.delete),
-                    ),
-                  ),
-                ),
-              ],
+      appBar: AppBar(
+        leading: IconButton(
+          color: themeState.getDarkTheme
+              ? const Color(0xFFececec)
+              : const Color(0xFF00264D),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
+        title: ReusibleText(
+          text: 'Orders(${ordersList.length})',
+          size: 20,
+          textfontWeight: FontWeight.bold,
+
+        ),
+        centerTitle: false,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            width: 50,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
             ),
-            body: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return OrdersWidget();
-                }),
-          );
+            child: Center(
+              child: IconButton(
+                onPressed: () {
+                  Methods.warningDialog(
+                    title: "Clear ?",
+                    subtitle: "Do you want to  clear your orders list ?",
+                    function: () {},
+                    context: context,
+                  );
+                },
+                icon: const Icon(Icons.delete),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+          itemCount: ordersList.length,
+          itemBuilder: (context, index) {
+            return ChangeNotifierProvider.value(
+                value: ordersList[index], child: const OrdersWidget());
+          }),
+    );
   }
 }

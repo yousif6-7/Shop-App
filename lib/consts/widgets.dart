@@ -102,7 +102,6 @@ class _CategoriesWidthState extends State<CategoriesWidth> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
-    final categoriesProvider = Provider.of<ProductModels>(context);
 
     return Padding(
       padding: const EdgeInsets.all(10),

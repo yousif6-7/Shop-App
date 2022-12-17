@@ -19,22 +19,22 @@ class _SubCategoriesState extends State<SubCategories> {
     final catName = ModalRoute.of(context)!.settings.arguments as String;
 
     List<ProductModels> productsByCat =
-        productProviders.findByCategory(catName);
+    productProviders.findByCategory(catName);
     return Scaffold(
       appBar: AppBar(),
       body: productsByCat.isEmpty
-          ? Center(child: Text('Nothing'))
+          ? const Center(child: Text('Nothing'))
           : Container(
-              height: double.maxFinite,
-              child: ListView.builder(
-                  itemCount: productsByCat.length,
-                  itemBuilder: (context, index) {
-                    return ChangeNotifierProvider.value(
-                      value: productsByCat[index],
-                      child: SubCatWidget(),
-                    );
-                  }),
-            ),
+        height: double.maxFinite,
+        child: ListView.builder(
+            itemCount: productsByCat.length,
+            itemBuilder: (context, index) {
+              return ChangeNotifierProvider.value(
+                value: productsByCat[index],
+                child: const SubCatWidget(),
+              );
+            }),
+      ),
     );
   }
 }

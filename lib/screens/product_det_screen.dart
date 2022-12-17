@@ -47,11 +47,11 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
     final productProviders = Provider.of<ProductProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final ProductModels getCurrentProduct =
-        productProviders.findProductById(productId);
+    productProviders.findProductById(productId);
 
     final cartProvider = Provider.of<CartProvider>(context);
     bool? _isInCart =
-        cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+    cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
@@ -59,7 +59,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
     double totalPrice = usedPrice * int.parse(counter.toString());
     return Scaffold(
       backgroundColor:
-          themeState.getDarkTheme ?  Color(0xFF335171) : Color(0xFFececec),
+      themeState.getDarkTheme ?  Color(0xFF335171) : Color(0xFFececec),
       body: Stack(children: [
         Positioned(
           left: 0,
@@ -107,91 +107,93 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                 topRight: Radius.circular(20),
               ),
             ),
-            child: Column(
-              children: [
-                ReusibleText(
-                  text: getCurrentProduct.title,
-                  size: 20,
-                  textfontWeight: FontWeight.bold,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ReusibleText(
-                    text:
-                        'Great and warm wool jacket made in turkey with a lot of colors to chose from.'),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ReusibleText(
+                    text: getCurrentProduct.title,
+                    size: 20,
+                    textfontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ReusibleText(
+                      text:
+                      'Great and warm wool jacket made in turkey with a lot of colors to chose from.'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: ReusibleText(
+                          text: 'Available sizes: ${getCurrentProduct.size}')),
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: ReusibleText(
-                        text: 'Available sizes: ${getCurrentProduct.size}')),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ReusibleText(
-                    text: 'Available colors: ${getCurrentProduct.color}',
+                      text: 'Available colors: ${getCurrentProduct.color}',
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    ReusibleText(
-                      text: '\$${usedPrice.toStringAsFixed(2)}',
-                      size: 20,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Visibility(
-                      visible: getCurrentProduct.isOnSale ? true : false,
-                      child: Text(
-                        '\$${getCurrentProduct.price}',
-                        style:
-                            TextStyle(decoration: TextDecoration.lineThrough),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      ReusibleText(
+                        text: '\$${usedPrice.toStringAsFixed(2)}',
+                        size: 20,
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  child: PageView.builder(
-                    controller: pageController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: ((context, index) {
-                      return Container(
-                        height: 100,
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(
-                              'assets/images/home/homeimg1.jpeg',
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Visibility(
+                        visible: getCurrentProduct.isOnSale ? true : false,
+                        child: Text(
+                          '\$${getCurrentProduct.price}',
+                          style:
+                          TextStyle(decoration: TextDecoration.lineThrough),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: PageView.builder(
+                      controller: pageController,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          height: 100,
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                'assets/images/home/homeimg1.jpeg',
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-                DotsIndicator(
-                  dotsCount: 5,
-                  position: currentValue,
-                  decorator: DotsDecorator(
-                      activeColor: themeState.getDarkTheme
-                          ? Color(0xFFececec)
-                          : Color(0xFF00264D),
-                      size: Size.square(9.0),
-                      activeSize: Size(18.0, 9.0),
-                      activeShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0))),
-                ),
-              ],
+                  DotsIndicator(
+                    dotsCount: 5,
+                    position: currentValue,
+                    decorator: DotsDecorator(
+                        activeColor: themeState.getDarkTheme
+                            ? Color(0xFFececec)
+                            : Color(0xFF00264D),
+                        size: Size.square(9.0),
+                        activeSize: Size(18.0, 9.0),
+                        activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -206,7 +208,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
         ),
         decoration: BoxDecoration(
           color:
-              themeState.getDarkTheme ? Color(0xFF0ececec) : Color(0xFFCCD4DB),
+          themeState.getDarkTheme ? Color(0xFF0ececec) : Color(0xFFCCD4DB),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -221,8 +223,8 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
               decoration: BoxDecoration(
                 color: _isInCart
                     ? themeState.getDarkTheme
-                        ? Color(0xFF335171)
-                        : Color(0xFFececec)
+                    ? Color(0xFF335171)
+                    : Color(0xFFececec)
                     : null,
                 borderRadius: BorderRadius.circular(20),
               ),

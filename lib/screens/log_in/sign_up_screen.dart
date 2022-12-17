@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/consts/firebase_const.dart';
 import 'package:shop_app/consts/widgets.dart';
 import 'package:shop_app/consts/widgets/loading_manegar.dart';
+import 'package:shop_app/screens/log_in/varifecation_secrren.dart';
 import 'package:shop_app/services/methods.dart';
 
-import '../../services/fetch_screen.dart';
-import '../btm_nav_bar.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -20,10 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
-  final _addressController = TextEditingController();
   final _emailFocus = FocusNode();
   final _passFocus = FocusNode();
-  final _addressFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   var _obscureText = true;
@@ -33,10 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _nameController.dispose();
     _passwordController.dispose();
     _emailController.dispose();
-    _addressController.dispose();
     _emailFocus.dispose();
     _passFocus.dispose();
-    _addressFocus.dispose();
     super.dispose();
   }
 
@@ -44,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoadingManegar(
-        
+
         isLoading: isLoading,
         child: SingleChildScrollView(
           child: Padding(
@@ -57,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.arrow_back_ios),
+                  icon: const Icon(Icons.arrow_back_ios),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -76,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           size: 20,
                           textfontWeight: FontWeight.w600,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         TextFormField(
@@ -85,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textInputAction: TextInputAction.next,
                           controller: _nameController,
                           keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Full name",
                             labelText: "Name",
                             prefixIcon: Icon(Icons.person),
@@ -98,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         TextFormField(
@@ -107,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textInputAction: TextInputAction.next,
                           controller: _emailController,
                           keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "aaaaa@gmail.com",
                             labelText: "email",
                             prefixIcon: Icon(Icons.email_outlined),
@@ -120,12 +117,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         TextFormField(
-                          onEditingComplete: () =>
-                              FocusScope.of(context).requestFocus(_addressFocus),
+
                           controller: _passwordController,
                           focusNode: _passFocus,
                           obscureText: _obscureText,
@@ -134,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: InputDecoration(
                             hintText: 'Name12345',
                             labelText: "password",
-                            prefixIcon: Icon(Icons.lock_rounded),
+                            prefixIcon: const Icon(Icons.lock_rounded),
                             suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -142,8 +138,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   });
                                 },
                                 child: _obscureText
-                                    ? Icon(Icons.visibility_rounded)
-                                    : Icon(Icons.visibility_off_rounded)),
+                                    ? const Icon(Icons.visibility_rounded)
+                                    : const Icon(Icons.visibility_off_rounded)),
                           ),
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
@@ -153,35 +149,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        TextFormField(
-                          controller: _addressController,
-                          onEditingComplete: () {
-                            submetOnSignup();
-                          },
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            hintText: '23st Place',
-                            labelText: "Address",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty || value.length < 7) {
-                              return "pleas a valid address";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        SizedBox(height: 10,),
-                         TextButton(
+
+                        TextButton(
                             onPressed: () {
                               submetOnSignup();
                             },
                             style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                            child: Text('SIGN UP')),
+                            child: const Text('SIGN UP')),
                         Row(
                           children: [
                             ReusibleText(text: "Alredy have an acount ?"),
@@ -189,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onPressed: () {},
                                 style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero),
-                                child: Text('LOGIN')),
+                                child: const Text('LOGIN')),
                           ],
                         ),
                       ],
@@ -203,14 +180,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-bool isLoading =false;
+  bool isLoading =false;
   void submetOnSignup() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     setState(() {
-      isLoading =true;
+      isLoading = true;
     });
-    if (isValid ) {
+    if (isValid) {
       _formKey.currentState!.save();
 
       try {
@@ -218,37 +195,45 @@ bool isLoading =false;
             email: _emailController.text.toLowerCase().trim(),
             password: _passwordController.text.trim());
         final User? user = authInstance.currentUser;
-        final _uid =user!.uid;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("userUid", user!.uid);
+        final _uid = user.uid;
+        user.updateDisplayName(_nameController.text);
+        user.reload();
         await FirebaseFirestore.instance.collection('users').doc(_uid).set({
-          'id' : _uid,
-          'name' : _nameController.text,
-          'email':_emailController.text,
+          'id': _uid,
+          'name': _nameController.text,
+          'email': _emailController.text,
           'password': _passwordController.text,
-          'Address' : _addressController.text,
-          'user_cart' :[],
-          'user_wishlist':[],
+          'user_cart': [],
+          'user_wishlist': [],
+
         });
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>FetchScreen()));
+        await FirebaseFirestore.instance.collection('orders').doc(_uid).set({
+          'orders': [],
+        });
+        if(!mounted)return;
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const VerificationScreen()));
       } on FirebaseAuthException catch (error) {
         Methods.ErrorDailog(subtitle: '${error.message}', context: context);
         setState(() {
-          isLoading =true;
+          isLoading = true;
         });
-      }catch (error) {
+      } catch (error) {
         Methods.ErrorDailog(subtitle: '$error', context: context);
         setState(() {
-          isLoading =true;
-          
+          isLoading = true;
         });
-
-      }finally{
+      } finally {
         setState(() {
-          isLoading =false;
+          isLoading = false;
         });
       }
-    }else{
-      isLoading =false;
-
+    } else {
+      isLoading = false;
     }
   }
 }
