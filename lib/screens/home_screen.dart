@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   icon: Icon(
                                     IconlyLight.arrowRightCircle,
                                     color: themeState.getDarkTheme
-                                        ? Colors.white
+                                        ? Colors.red
                                         : const Color(0xFF00264D),
                                   ),
                                 ),
