@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/sub_categories.dart';
 
 import '../models/producys_models.dart';
 import '../provider/dark_theme_provider.dart';
-import '../providers/models_provider.dart';
 
 class ListTileWidget extends StatelessWidget {
   ListTileWidget(
@@ -37,8 +35,9 @@ class ListTileWidget extends StatelessWidget {
         style: TextStyle(
           fontSize: size,
           fontWeight: fontWeight,
-          color:
-              themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
+          color: themeState.getDarkTheme
+              ? const Color(0xFFececec)
+              : const Color(0xFF00264D),
         ),
       ),
       subtitle: Text(
@@ -79,7 +78,9 @@ class ReusibleText extends StatelessWidget {
       style: TextStyle(
         fontWeight: textfontWeight,
         fontSize: size,
-        color: themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
+        color: themeState.getDarkTheme
+            ? const Color(0xFFececec)
+            : const Color(0xFF00264D),
       ),
     );
   }
@@ -112,7 +113,7 @@ class _CategoriesWidthState extends State<CategoriesWidth> {
               arguments: widget.gridText);
         },
         child: Container(
-          padding: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.only(right: 10),
           height: 250,
           width: double.maxFinite,
           decoration: BoxDecoration(
@@ -121,7 +122,9 @@ class _CategoriesWidthState extends State<CategoriesWidth> {
               image: NetworkImage(widget.gridimgpath),
             ),
             borderRadius: BorderRadius.circular(20),
-            color: themeState.getDarkTheme ? Color(0xFF335171) : Colors.white,
+            color: themeState.getDarkTheme
+                ? const Color(0xFF335171)
+                : Colors.white,
           ),
         ),
       ),

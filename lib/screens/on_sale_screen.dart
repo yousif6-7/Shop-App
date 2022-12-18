@@ -20,35 +20,34 @@ class _OnSaleScreenState extends State<OnSaleScreen> {
     List<ProductModels> OnSaleProducts = productProviders.getOnSaleProducts;
     return Scaffold(
       appBar: AppBar(),
-      body:OnSaleProducts.isEmpty?
-          Center(
-            child: Column(
-              children: [
-                ReusibleText(text: 'No seals yet'),
-              ],
-            ),
-          )
-      :SingleChildScrollView(
-
-        child: Column(
-          children: [
-            ReusibleText(text: 'On sale '),
-            Container(
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: OnSaleProducts.length,
-                itemBuilder: (context, index) {
-                  return ChangeNotifierProvider.value(
-                    child: OnSaleWidget(),
-                    value: OnSaleProducts[index],
-                  );
-                },
+      body: OnSaleProducts.isEmpty
+          ? Center(
+              child: Column(
+                children: [
+                  ReusibleText(text: 'No seals yet'),
+                ],
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  ReusibleText(text: 'On sale '),
+                  Container(
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: OnSaleProducts.length,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                          value: OnSaleProducts[index],
+                          child: OnSaleWidget(),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }
