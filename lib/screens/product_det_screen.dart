@@ -1,16 +1,12 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets.dart';
-import 'package:shop_app/consts/widgets/heart.dart';
 
-import '../consts/firebase_const.dart';
 import '../models/producys_models.dart';
 import '../provider/dark_theme_provider.dart';
 import '../providers/cart_provider.dart';
 import '../providers/models_provider.dart';
-import '../services/methods.dart';
 
 class ProductDetScreen extends StatefulWidget {
   const ProductDetScreen({Key? key}) : super(key: key);
@@ -47,11 +43,11 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
     final productProviders = Provider.of<ProductProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final ProductModels getCurrentProduct =
-    productProviders.findProductById(productId);
+        productProviders.findProductById(productId);
 
     final cartProvider = Provider.of<CartProvider>(context);
     bool? _isInCart =
-    cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+        cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
@@ -59,7 +55,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
     double totalPrice = usedPrice * int.parse(counter.toString());
     return Scaffold(
       backgroundColor:
-      themeState.getDarkTheme ?  Color(0xFF335171) : Color(0xFFececec),
+          themeState.getDarkTheme ? Color(0xFF335171) : Color(0xFFececec),
       body: Stack(children: [
         Positioned(
           left: 0,
@@ -110,7 +106,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ReusibleText(
+                  ReusableText(
                     text: getCurrentProduct.title,
                     size: 20,
                     textfontWeight: FontWeight.bold,
@@ -118,19 +114,19 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ReusibleText(
+                  ReusableText(
                       text:
-                      'Great and warm wool jacket made in turkey with a lot of colors to chose from.'),
+                          'Great and warm wool jacket made in turkey with a lot of colors to chose from.'),
                   SizedBox(
                     height: 10,
                   ),
                   Align(
                       alignment: Alignment.centerLeft,
-                      child: ReusibleText(
+                      child: ReusableText(
                           text: 'Available sizes: ${getCurrentProduct.size}')),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: ReusibleText(
+                    child: ReusableText(
                       text: 'Available colors: ${getCurrentProduct.color}',
                     ),
                   ),
@@ -139,7 +135,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                   ),
                   Row(
                     children: [
-                      ReusibleText(
+                      ReusableText(
                         text: '\$${usedPrice.toStringAsFixed(2)}',
                         size: 20,
                       ),
@@ -151,7 +147,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                         child: Text(
                           '\$${getCurrentProduct.price}',
                           style:
-                          TextStyle(decoration: TextDecoration.lineThrough),
+                              TextStyle(decoration: TextDecoration.lineThrough),
                         ),
                       ),
                     ],
@@ -208,7 +204,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
         ),
         decoration: BoxDecoration(
           color:
-          themeState.getDarkTheme ? Color(0xFF0ececec) : Color(0xFFCCD4DB),
+              themeState.getDarkTheme ? Color(0xFF0ececec) : Color(0xFFCCD4DB),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -223,8 +219,8 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
               decoration: BoxDecoration(
                 color: _isInCart
                     ? themeState.getDarkTheme
-                    ? Color(0xFF335171)
-                    : Color(0xFFececec)
+                        ? Color(0xFF335171)
+                        : Color(0xFFececec)
                     : null,
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -247,7 +243,7 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                           : Color(0xFF00264D),
                     ),
                   ),
-                  ReusibleText(
+                  ReusableText(
                     text: '${counter.toString()}',
                     size: 25,
                   ),
@@ -293,10 +289,10 @@ class _ProductDetScreenState extends State<ProductDetScreen> {
                         : Color(0xFFececec)),
                 child: Column(
                   children: [
-                    ReusibleText(
+                    ReusableText(
                       text: '\$${totalPrice.toStringAsFixed(2)}',
                     ),
-                    ReusibleText(text: _isInCart ? 'In cart' : 'Add to cart')
+                    ReusableText(text: _isInCart ? 'In cart' : 'Add to cart')
                   ],
                 ),
               ),

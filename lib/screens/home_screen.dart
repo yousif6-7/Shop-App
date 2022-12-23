@@ -1,14 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:shop_app/consts/widgets/cart_empty.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets/feeds_widget.dart';
 import 'package:shop_app/consts/widgets/slider.dart';
 import 'package:shop_app/provider/dark_theme_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shop_app/screens/on_sale_screen.dart';
-import 'package:shop_app/screens/product_det_screen.dart';
-import 'package:shop_app/screens/winter_catalog.dart';
 
 import '../consts/widgets.dart';
 import '../consts/widgets/home_ephty_sec.dart';
@@ -27,13 +26,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<ProductModels> searchList = [];
-  final TextEditingController _searchControlar = TextEditingController();
+  final box = GetStorage();
+  final List<ProductModels> userSearches = [];
+
+  // CHECK YOUR SPELLING WELL. IT SHOULD BE _searchController
+  final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   IconData? icon;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
-    _searchControlar.dispose();
+    _searchController.dispose();
     _searchFocusNode.dispose();
     super.dispose();
   }
@@ -42,20 +49,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productProviders = Provider.of<ProductProvider>(context);
-    List<ProductModels> OnSaleProducts = productProviders.getOnSaleProducts;
+    // NAME YOUR VARIABLES WELL. IT SHOULD BE onSaleProducts
+    List<ProductModels> onSaleProducts = productProviders.getOnSaleProducts;
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 40, right: 10),
+          // AVOID USING CONTAINERS FOR SPACING PURPOSES USE SIZEDBOX OR PADDING
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               icon: const Icon(
                 Icons.search,
                 size: 30,
               ),
               onPressed: () {
-                showSearch(context: context, delegate: SearchClass());
+                showSearch(
+                    context: context,
+                    delegate: SearchClass(
+                      userSearches: userSearches,
+                      box: box,
+                    ));
               },
             ),
           ),
@@ -107,155 +121,155 @@ class _HomeScreenState extends State<HomeScreen> {
               //   ),
               // ),
 
-              _searchControlar.text.isNotEmpty && searchList.isEmpty
+              _searchController.text.isNotEmpty && searchList.isEmpty
                   ? const HomeEmptyScreen(
-                  imagepath: 'assets/images/box.png',
-                  title: 'title',
-                  subtitle: 'subtitle')
+                      imagepath: 'assets/images/box.png',
+                      title: 'title',
+                      subtitle: 'subtitle')
                   : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const OnSaleScreen()),
-                      );
-                    },
-                    child: ReusibleText(
-                      text: 'View All',
-                      size: 20,
-                    ),
-                  ),
-                  SliderWidget(productModel: OnSaleProducts),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: ReusibleText(
-                      text: 'Oer winter catalog is here ',
-                      size: 20,
-                      textfontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  //
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    width: double.maxFinite,
-                    height: 250,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                          'assets/images/home/homeimg1.jpeg',
-                        ),
-                      ),
-                    ),
-                    child: Stack(
-                      //alignment: Alignment.bottomCenter,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 10),
-                              child: ReusibleText(
-                                text: 'CHECK IT NOW!',
-                                textfontWeight: FontWeight.w600,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const OnSaleScreen()),
+                            );
+                          },
+                          child: ReusableText(
+                            text: 'View All',
+                            size: 20,
+                          ),
+                        ),
+                        SliderWidget(productModel: onSaleProducts),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: ReusableText(
+                            text: 'Oer winter catalog is here ',
+                            size: 20,
+                            textfontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        //
+                        Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          width: double.maxFinite,
+                          height: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                'assets/images/home/homeimg1.jpeg',
                               ),
                             ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-
-                                   
-                                  },
-                                  icon: Icon(
-                                    IconlyLight.arrowRightCircle,
-                                    color: themeState.getDarkTheme
-                                        ? Colors.red
-                                        : const Color(0xFF00264D),
+                          ),
+                          child: Stack(
+                            //alignment: Alignment.bottomCenter,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 10),
+                                    child: ReusableText(
+                                      text: 'CHECK IT NOW!',
+                                      textfontWeight: FontWeight.w600,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          IconlyLight.arrowRightCircle,
+                                          color: themeState.getDarkTheme
+                                              ? Colors.red
+                                              : const Color(0xFF00264D),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: _searchController.text.isNotEmpty
+                              ? searchList.length
+                              : onSaleProducts.length,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider.value(
+                              value: _searchController.text.isNotEmpty
+                                  ? searchList[index]
+                                  : onSaleProducts[index],
+                              child: const FeedsWidget(),
+                            );
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-
-                  Container(
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _searchControlar.text.isNotEmpty
-                          ? searchList.length
-                          : OnSaleProducts.length,
-                      itemBuilder: (context, index) {
-                        return ChangeNotifierProvider.value(
-                          value: _searchControlar.text.isNotEmpty
-                              ? searchList[index]
-                              : OnSaleProducts[index],
-                          child: const FeedsWidget(),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }
 
 class SearchClass extends SearchDelegate<String> {
   List<ProductModels> recentSearch = [];
+  final List<ProductModels> userSearches;
+  final GetStorage box;
+  SearchClass({
+    required this.userSearches,
+    required this.box,
+  });
+  // create get storage for recent search
 
   @override
   List<Widget>? buildActions(BuildContext context) => [
-    IconButton(
-      icon: const Icon(Icons.clear),
-      onPressed: () {
-        query = '';
-      },
-    ),
-  ];
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            query = '';
+          },
+        ),
+      ];
 
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
-    icon: const Icon(Icons.arrow_back_ios),
-    onPressed: () {
-      Navigator.pop(context);
-    },
-  );
+        icon: const Icon(Icons.arrow_back_ios),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
 
   @override
   Widget buildResults(BuildContext context) {
     final productProviders = Provider.of<ProductProvider>(context);
-    List<ProductModels> allproducts = productProviders.getproductList;
+    List<ProductModels> allProducts = productProviders.getProductList;
 
     final results = query.isEmpty
-        ? recentSearch
-        : allproducts.where((element) {
-      final elToL = element.title.toLowerCase();
-      final qToL = query.toLowerCase();
-      return elToL.startsWith(qToL);
-    }).toList();
+        ? userSearches
+        : allProducts.where((element) {
+            final elToL = element.title.toLowerCase();
+            final qToL = query.toLowerCase();
+            return elToL.startsWith(qToL);
+          }).toList();
     return buildResultSuccess(results);
   }
-  Widget buildResultSuccess(List<ProductModels> results) =>
-      Container(
+
+  Widget buildResultSuccess(List<ProductModels> results) => SizedBox(
         height: 500,
         child: ListView.builder(
             itemCount: results.length,
@@ -266,11 +280,12 @@ class SearchClass extends SearchDelegate<String> {
                 padding: const EdgeInsets.only(top: 10),
                 child: ListTile(
                   onTap: () {
-                    recentSearch.add(result);
+                    userSearches.add(result);
+
                     Navigator.pushNamed(context, "ProductDetScreen",
                         arguments: idd);
                   },
-                  leading: Container(
+                  leading: SizedBox(
                     height: 100,
                     width: 60,
                     child: ClipRRect(
@@ -292,7 +307,7 @@ class SearchClass extends SearchDelegate<String> {
                       ),
                     ),
                   ),
-                  title: ReusibleText(
+                  title: ReusableText(
                     text: result.title,
                   ),
                 ),
@@ -302,60 +317,62 @@ class SearchClass extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     final productProviders = Provider.of<ProductProvider>(context);
-    List<ProductModels> allproducts = productProviders.getproductList;
+    List<ProductModels> allproducts = productProviders.getProductList;
     final suggestions = query.isEmpty
-        ? recentSearch
+        ? userSearches
         : allproducts.where((element) {
-      final elToL = element.title.toLowerCase();
-      final qToL = query.toLowerCase();
-      return elToL.startsWith(qToL);
-    }).toList();
+            final elToL = element.title.toLowerCase();
+            final qToL = query.toLowerCase();
+            return elToL.startsWith(qToL);
+          }).toList();
     return buildSuggestionsSuccess(suggestions);
-
   }
-  Widget buildSuggestionsSuccess(List<ProductModels> suggestions) => Container(
-    height: 500,
-    child: ListView.builder(
-        itemCount: suggestions.length,
-        itemBuilder: (context, index) {
-          final suggest = suggestions[index];
-          final idd = suggest.id;
-          return Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: ListTile(
-              onTap: () {
 
-                Navigator.pushNamed(context, "ProductDetScreen",
-                    arguments: idd);
-              },
-              leading: Container(
-                height: 100,
-                width: 60,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: CachedNetworkImage(
-                    imageUrl: suggest.imageUrl,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+  Widget buildSuggestionsSuccess(List<ProductModels> suggestions) => SizedBox(
+        height: 500,
+        child: ListView.builder(
+            itemCount: suggestions.length,
+            itemBuilder: (context, index) {
+              final suggest = suggestions[index];
+              final idd = suggest.id;
+              return Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ListTile(
+                  onTap: () {
+                    if (!userSearches.contains(suggest)) {
+                      userSearches.add(suggest);
+                    }
+                    Navigator.pushNamed(context, "ProductDetScreen",
+                        arguments: idd);
+                  },
+                  leading: SizedBox(
+                    height: 100,
+                    width: 60,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CachedNetworkImage(
+                        imageUrl: suggest.imageUrl,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => Container(
+                          alignment: Alignment.center,
+                          child: const Indecator(isLoading: true),
                         ),
                       ),
                     ),
-                    placeholder: (context, url) => Container(
-                      alignment: Alignment.center,
-                      child: const Indecator(isLoading: true),
-                    ),
+                  ),
+                  // CHECK YOUR NAMING
+                  title: ReusableText(
+                    text: suggest.title,
                   ),
                 ),
-              ),
-              title: ReusibleText(
-                text: suggest.title,
-              ),
-            ),
-          );
-        }),
-  );
-
+              );
+            }),
+      );
 }

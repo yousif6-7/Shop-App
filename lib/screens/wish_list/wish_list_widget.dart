@@ -12,7 +12,6 @@ import '../../providers/cart_provider.dart';
 import '../../providers/models_provider.dart';
 import '../../providers/wish_list_provider.dart';
 import '../../services/methods.dart';
-import '../product_det_screen.dart';
 
 class WishListWidget extends StatefulWidget {
   const WishListWidget({Key? key}) : super(key: key);
@@ -31,15 +30,15 @@ class _WishListWidgetState extends State<WishListWidget> {
     final wishlistModels = Provider.of<WishListModels>(context);
     final wishlistProvider = Provider.of<WishListProvider>(context);
     final getCurrentProduct =
-    productProviders.findProductById(wishlistModels.productid);
+        productProviders.findProductById(wishlistModels.productid);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : double.parse(getCurrentProduct.price);
     bool? _isInWishlist =
-    wishlistProvider.getwishListItems.containsKey(getCurrentProduct.id);
+        wishlistProvider.getwishListItems.containsKey(getCurrentProduct.id);
     final cartProvider = Provider.of<CartProvider>(context);
-    bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
-
+    bool? _isInCart =
+        cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -54,8 +53,8 @@ class _WishListWidgetState extends State<WishListWidget> {
         child: Row(children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, "ProductDetScreen",arguments: getCurrentProduct.id);
-
+              Navigator.pushNamed(context, "ProductDetScreen",
+                  arguments: getCurrentProduct.id);
             },
             child: Container(
               width: 180,
@@ -76,7 +75,7 @@ class _WishListWidgetState extends State<WishListWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ReusibleText(
+              ReusableText(
                 text: getCurrentProduct.title,
                 size: 20,
                 textfontWeight: FontWeight.w500,
@@ -92,39 +91,39 @@ class _WishListWidgetState extends State<WishListWidget> {
                     onPressed: _isInCart
                         ? null
                         : () {
-                      final User? user = authInstance.currentUser;
-                      if (user == null) {
-                        Methods.ErrorDailog(
-                            subtitle:
-                            "Error,You are not regestered",
-                            context: context);
-                        return;
-                      }
-                        cartProvider.addProductToCart(
-                            productid: getCurrentProduct.id, quantity: 1);
-
-                    },
+                            final User? user = authInstance.currentUser;
+                            if (user == null) {
+                              Methods.ErrorDailog(
+                                  subtitle: "Error,You are not regestered",
+                                  context: context);
+                              return;
+                            }
+                            cartProvider.addProductToCart(
+                                productid: getCurrentProduct.id, quantity: 1);
+                          },
                     icon: Icon(_isInCart ? Icons.check : IconlyLight.bag,
                         color: themeState.getDarkTheme
                             ? Colors.white
                             : Color(0xFF00264D)),
                   ),
-
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "ProductDetScreen",arguments: getCurrentProduct.id);
-
+                      Navigator.pushNamed(context, "ProductDetScreen",
+                          arguments: getCurrentProduct.id);
                     },
                     icon: Icon(IconlyLight.arrowRightCircle),
                   ),
                   HeartWidget(
-                      productId: getCurrentProduct.id,
+                    productId: getCurrentProduct.id,
                     isInwishList: _isInWishlist,
                   ),
                 ],
               ),
-              ReusibleText(
-                text: '\$${usedPrice.toStringAsFixed(2)}', size: 20, textfontWeight: FontWeight.w600,),
+              ReusableText(
+                text: '\$${usedPrice.toStringAsFixed(2)}',
+                size: 20,
+                textfontWeight: FontWeight.w600,
+              ),
             ],
           ),
         ]),

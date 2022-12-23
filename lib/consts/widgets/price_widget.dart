@@ -19,7 +19,7 @@ class PriceWidget extends StatelessWidget {
     return FittedBox(
       child: Column(
         children: [
-          ReusibleText(
+          ReusableText(
             text: '\$${(userPrice * int.parse(textprice)).toStringAsFixed(2)} ',
             size: 18,
             textfontWeight: FontWeight.w500,

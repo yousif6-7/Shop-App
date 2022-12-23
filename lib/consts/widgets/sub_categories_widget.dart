@@ -3,11 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets.dart';
+
 import '../../models/producys_models.dart';
 import '../../provider/dark_theme_provider.dart';
 import '../../providers/cart_provider.dart';
-import '../../providers/models_provider.dart';
-import '../../screens/product_det_screen.dart';
 
 class SubCatWidget extends StatefulWidget {
   const SubCatWidget({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _SubCatWidgetState extends State<SubCatWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ReusibleText(
+              ReusableText(
                 text: ProductModelsvar.title,
                 size: 30,
               ),
@@ -50,11 +49,11 @@ class _SubCatWidgetState extends State<SubCatWidget> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ReusibleText(
+                      ReusableText(
                         text: 'Price: \$${ProductModelsvar.price}',
                         size: 15,
                       ),
-                      ReusibleText(
+                      ReusableText(
                         text: 'The new Nick Air force 2022',
                         size: 12,
                       ),
@@ -66,7 +65,8 @@ class _SubCatWidgetState extends State<SubCatWidget> {
                                 return;
                               } else {
                                 cartProvider.addProductToCart(
-                                    productid: ProductModelsvar.id, quantity: 1);
+                                    productid: ProductModelsvar.id,
+                                    quantity: 1);
                               }
                             },
                             icon: Icon(IconlyLight.bag,

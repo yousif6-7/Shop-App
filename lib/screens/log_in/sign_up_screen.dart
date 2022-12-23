@@ -8,8 +8,6 @@ import 'package:shop_app/consts/widgets/loading_manegar.dart';
 import 'package:shop_app/screens/log_in/varifecation_secrren.dart';
 import 'package:shop_app/services/methods.dart';
 
-
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -41,7 +39,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoadingManegar(
-
         isLoading: isLoading,
         child: SingleChildScrollView(
           child: Padding(
@@ -63,12 +60,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ReusibleText(
+                        ReusableText(
                           text: "Welcome",
                           size: 30,
                           textfontWeight: FontWeight.bold,
                         ),
-                        ReusibleText(
+                        ReusableText(
                           text: "Sign up to contenue",
                           size: 20,
                           textfontWeight: FontWeight.w600,
@@ -121,7 +118,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 10,
                         ),
                         TextFormField(
-
                           controller: _passwordController,
                           focusNode: _passFocus,
                           obscureText: _obscureText,
@@ -152,16 +148,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-
                         TextButton(
                             onPressed: () {
                               submetOnSignup();
                             },
-                            style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            style:
+                                TextButton.styleFrom(padding: EdgeInsets.zero),
                             child: const Text('SIGN UP')),
                         Row(
                           children: [
-                            ReusibleText(text: "Alredy have an acount ?"),
+                            ReusableText(text: "Alredy have an acount ?"),
                             TextButton(
                                 onPressed: () {},
                                 style: TextButton.styleFrom(
@@ -180,7 +176,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-  bool isLoading =false;
+
+  bool isLoading = false;
   void submetOnSignup() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -207,12 +204,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'password': _passwordController.text,
           'user_cart': [],
           'user_wishlist': [],
-
         });
         await FirebaseFirestore.instance.collection('orders').doc(_uid).set({
           'orders': [],
         });
-        if(!mounted)return;
+        if (!mounted) return;
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

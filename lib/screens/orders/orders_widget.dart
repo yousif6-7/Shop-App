@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets/indecator.dart';
 
 import '../../consts/widgets.dart';
-import '../../consts/widgets/loading_manegar.dart';
 import '../../models/orders_models.dart';
 import '../../models/producys_models.dart';
 import '../../providers/models_provider.dart';
@@ -23,7 +22,8 @@ class _OrdersWidgetState extends State<OrdersWidget> {
   void didChangeDependencies() {
     final ordersModel = Provider.of<OrdersModel>(context);
     var orderDate = ordersModel.orderDate.toDate();
-    DateToShow = '${orderDate.day}/${orderDate.month}/${orderDate.year} at ${orderDate.hour}:${orderDate.minute}';
+    DateToShow =
+        '${orderDate.day}/${orderDate.month}/${orderDate.year} at ${orderDate.hour}:${orderDate.minute}';
     super.didChangeDependencies();
   }
 
@@ -32,8 +32,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     final ordersModel = Provider.of<OrdersModel>(context);
     final productProviders = Provider.of<ProductProvider>(context);
     final ProductModels getCurrentProduct =
-    productProviders.findProductById(ordersModel.productId);
-
+        productProviders.findProductById(ordersModel.productId);
 
     double paidPrice = double.parse(getCurrentProduct.price.toString()) *
         int.parse(ordersModel.quantity.toString());
@@ -104,20 +103,18 @@ class _OrdersWidgetState extends State<OrdersWidget> {
               const SizedBox(
                 height: 5,
               ),
-              ReusibleText(
+              ReusableText(
                 text: 'Paid: iq $paidPrice',
                 size: 16,
                 textfontWeight: FontWeight.w600,
-
               ),
               const SizedBox(
                 height: 5,
               ),
-              ReusibleText(
+              ReusableText(
                 text: 'address: ${ordersModel.address}',
                 size: 15,
                 textfontWeight: FontWeight.w600,
-
               ),
               const SizedBox(
                 height: 5,
@@ -125,34 +122,30 @@ class _OrdersWidgetState extends State<OrdersWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ReusibleText(
+                  ReusableText(
                     text: 'Phone number:',
                     size: 15,
                     textfontWeight: FontWeight.w600,
-
                   ),
-                  ReusibleText(
+                  ReusableText(
                     text: ' ${ordersModel.phoneNumber.toString()}',
                     size: 15,
                     textfontWeight: FontWeight.w600,
-
                   ),
                 ],
               ),
               const SizedBox(
                 height: 5,
               ),
-              ReusibleText(
+              ReusableText(
                 text: 'Date and time:',
                 size: 15,
                 textfontWeight: FontWeight.w600,
-
               ),
-              ReusibleText(
+              ReusableText(
                 text: DateToShow,
                 size: 16,
                 textfontWeight: FontWeight.w600,
-
               ),
             ],
           ),

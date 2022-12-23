@@ -1,22 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets/heart.dart';
 import 'package:shop_app/consts/widgets/price_widget.dart';
-import 'package:shop_app/models/cart_models.dart';
 import 'package:shop_app/models/producys_models.dart';
 import 'package:shop_app/providers/cart_provider.dart';
 import 'package:shop_app/providers/models_provider.dart';
 
 import '../../provider/dark_theme_provider.dart';
 import '../../providers/wish_list_provider.dart';
-import '../../screens/product_det_screen.dart';
-import '../../services/methods.dart';
-import '../firebase_const.dart';
 import '../widgets.dart';
 import 'indecator.dart';
 
@@ -42,20 +35,15 @@ class _FeedsWidgetState extends State<FeedsWidget> {
 
     final wishListProvider = Provider.of<WishListProvider>(context);
     List<ProductModels> productsByCat =
-    productProviders.findByCategory(ProductModelsvar.productcat);
+        productProviders.findByCategory(ProductModelsvar.productCat);
 
-
-
-    List<ProductModels> allproducts = productProviders.getproductList;
+    List<ProductModels> allproducts = productProviders.getProductList;
     List<ProductModels> OnSaleProducts = productProviders.getOnSaleProducts;
-
-
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        ReusibleText(
+        ReusableText(
           text: 'Our top sales',
           size: 20,
           textfontWeight: FontWeight.w600,
@@ -63,21 +51,21 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         const SizedBox(
           height: 10,
         ),
-        ReusibleText(
-          text: ProductModelsvar.productcat,
+        ReusableText(
+          text: ProductModelsvar.productCat,
           size: 15,
           textfontWeight: FontWeight.w500,
         ),
-        Container(
+        SizedBox(
           height: 250,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: productsByCat.length,
             itemBuilder: (context, index) {
-              bool? _isInCart = cartProvider.getCartItems
+              bool? isInCart = cartProvider.getCartItems
                   .containsKey(productsByCat[index].id);
-              bool? _isInWishlist =
-              wishListProvider.getwishListItems.containsKey(productsByCat[index].id);
+              bool? isInWishlist = wishListProvider.getwishListItems
+                  .containsKey(productsByCat[index].id);
               return Container(
                 height: 100,
                 width: 300,
@@ -105,18 +93,17 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         ),
                         placeholder: (context, url) => Container(
                           alignment: Alignment.center,
-                          child:  Indecator(isLoading: true),
+                          child: const Indecator(isLoading: true),
                         ),
                       ),
                     ),
                   ),
                   Container(
                     width: 80,
-                    decoration:BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(20),
                     ),
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -132,22 +119,22 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         Column(
                           children: [
                             IconButton(
-                              onPressed: _isInCart
+                              onPressed: isInCart
                                   ? null
                                   : () {
-                                cartProvider.addProductToCart(
-                                    productid: productsByCat[index].id,
-                                    quantity: 1);
-                              },
+                                      cartProvider.addProductToCart(
+                                          productid: productsByCat[index].id,
+                                          quantity: 1);
+                                    },
                               icon: Icon(
-                                  _isInCart ? Icons.check : IconlyLight.bag,
+                                  isInCart ? Icons.check : IconlyLight.bag,
                                   color: themeState.getDarkTheme
                                       ? Colors.white
                                       : const Color(0xFF00264D)),
                             ),
                             HeartWidget(
                               productId: productsByCat[index].id,
-                              isInwishList: _isInWishlist,
+                              isInwishList: isInWishlist,
                             ),
                             IconButton(
                               onPressed: () {

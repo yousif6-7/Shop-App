@@ -17,24 +17,23 @@ class Methods {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: ReusibleText(
+            title: ReusableText(
               text: title,
             ),
-            content: ReusibleText(text: subtitle),
+            content: ReusableText(text: subtitle),
             actions: [
               TextButton(
                   onPressed: () {
                     function();
-
                   },
-                  child: ReusibleText(text: 'Ok')),
+                  child: ReusableText(text: 'Ok')),
               TextButton(
                   onPressed: () {
                     if (Navigator.canPop(context)) {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Cansel',
                     style: TextStyle(color: Colors.red),
                   )),
@@ -51,10 +50,10 @@ class Methods {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: ReusibleText(
+            title: ReusableText(
               text: "Error",
             ),
-            content: ReusibleText(text: subtitle),
+            content: ReusableText(text: subtitle),
             actions: [
               TextButton(
                   onPressed: () {
@@ -62,7 +61,7 @@ class Methods {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'OK',
                     style: TextStyle(color: Colors.red),
                   )),

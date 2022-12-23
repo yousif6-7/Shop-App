@@ -1,7 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/product_det_screen.dart';
 
 import '../../models/producys_models.dart';
 import '../../provider/dark_theme_provider.dart';
@@ -18,7 +17,6 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-
   PageController pageController = PageController(viewportFraction: 0.90);
   var _currentpagevalue = 0.0;
   double _ScaleFactor = 0.8;
@@ -52,7 +50,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         height: 240,
         child: PageView.builder(
             controller: pageController,
-            itemCount:  OnSaleProducts.length ,
+            itemCount: OnSaleProducts.length,
             itemBuilder: (context, index) {
               return _buildbodyitem(index, context);
             }),
@@ -62,7 +60,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         position: _currentpagevalue,
         decorator: DotsDecorator(
             activeColor:
-            themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
+                themeState.getDarkTheme ? Color(0xFFececec) : Color(0xFF00264D),
             size: Size.square(9.0),
             activeSize: Size(18.0, 9.0),
             activeShape: RoundedRectangleBorder(
@@ -132,7 +130,7 @@ class _SliderWidgetState extends State<SliderWidget> {
             child: Container(
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Center(
-                child: ReusibleText(
+                child: ReusableText(
                   text: widget.productModel[index].title,
                 ),
               ),

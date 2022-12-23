@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/consts/widgets.dart';
+
 class HomeEmptyScreen extends StatelessWidget {
-  const HomeEmptyScreen(
-      {Key? key,
-        required this.imagepath,
-        required this.title,
-        required this.subtitle,
-      })
-      : super(key: key);
+  const HomeEmptyScreen({
+    Key? key,
+    required this.imagepath,
+    required this.title,
+    required this.subtitle,
+  }) : super(key: key);
   final String imagepath;
   final String title;
   final String subtitle;
@@ -20,9 +20,7 @@ class HomeEmptyScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-
               margin: EdgeInsets.only(top: 20),
-
               child: Image.asset(
                 imagepath,
                 width: double.infinity,
@@ -31,7 +29,7 @@ class HomeEmptyScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ReusibleText(
+            ReusableText(
               text: '${title}!',
               size: 30,
               textfontWeight: FontWeight.bold,
@@ -39,7 +37,7 @@ class HomeEmptyScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            ReusibleText(
+            ReusableText(
               text: subtitle,
               size: 16,
               textfontWeight: FontWeight.w600,
@@ -47,7 +45,6 @@ class HomeEmptyScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-
           ],
         ),
       ),

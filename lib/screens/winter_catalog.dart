@@ -16,22 +16,21 @@ class _WinterCatalogState extends State<WinterCatalog> {
   @override
   Widget build(BuildContext context) {
     final productProviders = Provider.of<ProductProvider>(context);
-    List<ProductModels> allproducts = productProviders.getproductList;
+    List<ProductModels> allproducts = productProviders.getProductList;
 
     List<ProductModels> OnSaleProducts = productProviders.getOnSaleProducts;
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
+      body: SizedBox(
         height: double.maxFinite,
         child: ListView.builder(
             itemCount: 6,
-            itemBuilder: (context,index){
+            itemBuilder: (context, index) {
               return ChangeNotifierProvider.value(
-                child: WinterCatalogWidget(),
                 value: OnSaleProducts[index],
+                child: WinterCatalogWidget(),
               );
-            }
-        ),
+            }),
       ),
     );
   }

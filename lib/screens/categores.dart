@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets.dart';
 
-import '../models/producys_models.dart';
 import '../provider/dark_theme_provider.dart';
-import '../providers/models_provider.dart';
 
 class Categories extends StatelessWidget {
-  Categories({Key? key, }) : super(key: key);
-
+  const Categories({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class Categories extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: ReusibleText(
+        title: ReusableText(
           text: 'Categories',
           size: 30,
           textfontWeight: FontWeight.bold,
@@ -34,22 +33,23 @@ class Categories extends StatelessWidget {
             if (snapshot.data.docs.isEmpty) {
               return Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: ReusibleText(text: 'Your store is empty'),
-                  ));
+                padding: const EdgeInsets.only(top: 30),
+                child: ReusableText(text: 'Your store is empty'),
+              ));
             } else if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: ((context, index) => CategoriesWidth(
-                  gridimgpath:snapshot.data!.docs[index]['imageUrl'] ,
-                  gridText: snapshot.data!.docs[index]['productCategoryName'],
-                )),
+                      gridimgpath: snapshot.data!.docs[index]['imageUrl'],
+                      gridText: snapshot.data!.docs[index]
+                          ['productCategoryName'],
+                    )),
               );
             } else {
-              return ReusibleText(text: "Error");
+              return ReusableText(text: "Error");
             }
           }
-          return ReusibleText(text: "Something went wrong");
+          return ReusableText(text: "Something went wrong");
         },
       ),
     );

@@ -51,7 +51,7 @@ class _CartState extends State<Cart> {
 
     final cartProvider = Provider.of<CartProvider>(context);
     final cartItemsList =
-    cartProvider.getCartItems.values.toList().reversed.toList();
+        cartProvider.getCartItems.values.toList().reversed.toList();
     final productProviders = Provider.of<ProductProvider>(context);
 
     double totalDiscount = 0.0;
@@ -60,7 +60,7 @@ class _CartState extends State<Cart> {
     double total = 0.0;
     cartProvider.getCartItems.forEach((key, value) {
       final ProductModels getCurrentProduct =
-      productProviders.findProductById(value.productid);
+          productProviders.findProductById(value.productid);
 
       total += double.parse(getCurrentProduct.price) * value.quantity;
       //this is the normal total
@@ -74,109 +74,108 @@ class _CartState extends State<Cart> {
 
     return cartItemsList.isEmpty
         ? const EmptyScreen(
-      imagepath: 'assets/images/clips/cart.png',
-      title: 'Whoops',
-      subtitle: 'Your cart is empty for now ',
-
-    )
+            imagepath: 'assets/images/clips/cart.png',
+            title: 'Whoops',
+            subtitle: 'Your cart is empty for now ',
+          )
         : Scaffold(
-      appBar: AppBar(
-        title: ReusibleText(
-          text: 'Cart(${cartItemsList.length})',
-          size: 20,
-          textfontWeight: FontWeight.bold,
-        ),
-        centerTitle: false,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 10),
-            width: 50,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {
-                  Methods.warningDialog(
-                    title: "Clear ?",
-                    subtitle: "Do you want to  clear your cart ?",
-                    function: () {
-                      Methods.warningDialog(
-                        title: "Clear ?",
-                        subtitle: "Do you want to  clear your cart ?",
-                        function: () async {
-                          await cartProvider.clearDbCart();
-                          cartProvider.clearCart();
-                          Navigator.pop(context);
-                        },
-                        context: context,
-                      );
-                    },
-                    context: context,
-                  );
-                },
-                icon: const Icon(Icons.delete),
+            appBar: AppBar(
+              title: ReusableText(
+                text: 'Cart(${cartItemsList.length})',
+                size: 20,
+                textfontWeight: FontWeight.bold,
               ),
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              centerTitle: false,
+              actions: [
                 Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                  margin: const EdgeInsets.only(right: 10),
+                  width: 50,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
                     color: Colors.white,
                   ),
-                  child: TextButton(
-                    onPressed: () async {
-                      await alartDialog(
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {
+                        Methods.warningDialog(
+                          title: "Clear ?",
+                          subtitle: "Do you want to  clear your cart ?",
+                          function: () {
+                            Methods.warningDialog(
+                              title: "Clear ?",
+                              subtitle: "Do you want to  clear your cart ?",
+                              function: () async {
+                                await cartProvider.clearDbCart();
+                                cartProvider.clearCart();
+                                Navigator.pop(context);
+                              },
+                              context: context,
+                            );
+                          },
                           context: context,
-                          totalPrice: total,
-                          isLoading: isLoading,
-                          address: addresscontroller.text);
-                    },
-                    child: Text(
-                      'Submet order',
-                      style: TextStyle(
-                          color: themeState.getDarkTheme
-                              ? const Color(0xFF335171)
-                              : const Color(0xFF001B36),
-                          fontWeight: FontWeight.bold),
+                        );
+                      },
+                      icon: const Icon(Icons.delete),
                     ),
                   ),
                 ),
-                FittedBox(
-                    child: ReusibleText(
-                      text:
-                      'Total amount: \$${totalDiscount.toStringAsFixed(2)}',
-                      textfontWeight: FontWeight.w600,
-                    ))
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: cartItemsList.length,
-                  itemBuilder: (context, index) {
-                    return ChangeNotifierProvider.value(
-                      value: cartItemsList[index],
-                      child: CartWidget(
-                        q: cartItemsList[index].quantity,
+            body: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        child: TextButton(
+                          onPressed: () async {
+                            await alartDialog(
+                                context: context,
+                                totalPrice: total,
+                                isLoading: isLoading,
+                                address: addresscontroller.text);
+                          },
+                          child: Text(
+                            'Submet order',
+                            style: TextStyle(
+                                color: themeState.getDarkTheme
+                                    ? const Color(0xFF335171)
+                                    : const Color(0xFF001B36),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    );
-                  }),
+                      FittedBox(
+                          child: ReusableText(
+                        text:
+                            'Total amount: \$${totalDiscount.toStringAsFixed(2)}',
+                        textfontWeight: FontWeight.w600,
+                      ))
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: cartItemsList.length,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                            value: cartItemsList[index],
+                            child: CartWidget(
+                              q: cartItemsList[index].quantity,
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Future<void> alartDialog({
@@ -191,7 +190,7 @@ class _CartState extends State<Cart> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: ReusibleText(
+            title: ReusableText(
               text: "Pleas,provide your address and phone number",
               size: 20,
             ),
@@ -204,7 +203,7 @@ class _CartState extends State<Cart> {
                       controller: addresscontroller,
                       maxLines: 2,
                       decoration:
-                      const InputDecoration(hintText: 'Your address'),
+                          const InputDecoration(hintText: 'Your address'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "pleas enter a valid address";
@@ -238,7 +237,7 @@ class _CartState extends State<Cart> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: ReusibleText(
+                    child: ReusableText(
                       text: 'Cansel',
                     ),
                   ),
@@ -256,7 +255,7 @@ class _CartState extends State<Cart> {
                               context,
                               listen: false);
                           final cartProvider =
-                          Provider.of<CartProvider>(context, listen: false);
+                              Provider.of<CartProvider>(context, listen: false);
                           final orderProvider = Provider.of<OrdersProvider>(
                               context,
                               listen: false);
@@ -271,8 +270,8 @@ class _CartState extends State<Cart> {
                                 userId: user!.uid,
                                 productid: value.productid,
                                 price:
-                                ((getCurrentProduct.price) * value.quantity)
-                                    .toString(),
+                                    ((getCurrentProduct.price) * value.quantity)
+                                        .toString(),
                                 imageUrl: getCurrentProduct.imageUrl,
                                 totalPrice: totalPrice.toStringAsFixed(2),
                                 userName: user.displayName ?? 'user',
@@ -322,16 +321,16 @@ class _CartState extends State<Cart> {
                       },
                       child: isLoading
                           ? SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: Indecator(isLoading: isLoading))
+                              height: 30,
+                              width: 30,
+                              child: Indecator(isLoading: isLoading))
                           : Text(
-                        'Submet ',
-                        style: TextStyle(
-                            color: themeState.getDarkTheme
-                                ? const Color(0xFFececec)
-                                : const Color(0xFF00264D)),
-                      )),
+                              'Submet ',
+                              style: TextStyle(
+                                  color: themeState.getDarkTheme
+                                      ? const Color(0xFFececec)
+                                      : const Color(0xFF00264D)),
+                            )),
                 ],
               ),
             ],

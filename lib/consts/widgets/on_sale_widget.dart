@@ -1,15 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/consts/firebase_const.dart';
 import 'package:shop_app/consts/widgets/price_widget.dart';
-import 'package:shop_app/services/methods.dart';
 
 import '../../models/producys_models.dart';
 import '../../provider/dark_theme_provider.dart';
 import '../../providers/cart_provider.dart';
-import '../../providers/models_provider.dart';
 import '../../screens/product_det_screen.dart';
 import '../widgets.dart';
 
@@ -34,7 +30,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ReusibleText(
+          ReusableText(
             text: ProductModelsvar.title,
             size: 15,
             textfontWeight: FontWeight.w500,

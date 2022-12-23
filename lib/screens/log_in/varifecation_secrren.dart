@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,8 +28,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
     if (!isEmailVerified) {
       sendVerificationEmail();
       timer = Timer.periodic(
-        Duration(seconds: 3),
-            (_) => checkedEmailVerified(),
+        const Duration(seconds: 3),
+        (_) => checkedEmailVerified(),
       );
     }
 
@@ -59,7 +58,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       setState(() {
         canResendEmail = false;
       });
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       setState(() {
         canResendEmail = true;
       });
@@ -72,36 +71,35 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? TabBarScreen()
+      ? const TabBarScreen()
       : Scaffold(
-    body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ReusibleText(
-              text:
-              'A verification E-mail has been send to this Email verify to continu.',
-              textfontWeight: FontWeight.w600,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ReusableText(
+                    text:
+                        'A verification E-mail has been send to this Email verify to continu.',
+                    textfontWeight: FontWeight.w600,
+                  ),
+                  TextButton(
+                      onPressed: canResendEmail ? sendVerificationEmail : null,
+                      child: ReusableText(
+                        text: 'Resent email',
+                      )),
+                  TextButton(
+                      onPressed: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LogInScreen())),
+                      child: ReusableText(
+                        text: 'Cansel',
+                      ))
+                ],
+              ),
             ),
-            TextButton(
-                onPressed: canResendEmail ? sendVerificationEmail : null,
-                child: ReusibleText(
-                  text: 'Resent email',
-                )),
-            TextButton(
-                onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LogInScreen())),
-                child: ReusibleText(
-                  text: 'Cansel',
-                ))
-          ],
-        ),
-      ),
-    ),
-  );
+          ),
+        );
 }
-

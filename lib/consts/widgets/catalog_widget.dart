@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/product_det_screen.dart';
 
 import '../../models/producys_models.dart';
 import '../../provider/dark_theme_provider.dart';
@@ -23,7 +22,7 @@ class _WinterCatalogWidgetState extends State<WinterCatalogWidget> {
     final ProductModelsvar = Provider.of<ProductModels>(context);
     final wishListProvider = Provider.of<WishListProvider>(context);
     bool? _isInWishlist =
-    wishListProvider.getwishListItems.containsKey(ProductModelsvar.id);
+        wishListProvider.getwishListItems.containsKey(ProductModelsvar.id);
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
@@ -39,7 +38,7 @@ class _WinterCatalogWidgetState extends State<WinterCatalogWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ReusibleText(
+              ReusableText(
                 text: 'winter outfit',
                 size: 30,
               ),
@@ -49,11 +48,11 @@ class _WinterCatalogWidgetState extends State<WinterCatalogWidget> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ReusibleText(
+                      ReusableText(
                         text: 'Price: \$100',
                         size: 15,
                       ),
-                      ReusibleText(
+                      ReusableText(
                         text: 'The 2022 collections',
                         size: 12,
                       ),
@@ -72,15 +71,14 @@ class _WinterCatalogWidgetState extends State<WinterCatalogWidget> {
                           ),
                           IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, "ProductDetScreen",arguments: ProductModelsvar.id);
-
+                              Navigator.pushNamed(context, "ProductDetScreen",
+                                  arguments: ProductModelsvar.id);
                             },
                             icon: Icon(IconlyLight.arrowRightCircle,
                                 color: themeState.getDarkTheme
                                     ? Colors.white
                                     : Color(0xFF00264D)),
                           ),
-
                         ],
                       )
                     ],

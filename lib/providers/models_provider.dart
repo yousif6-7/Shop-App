@@ -17,7 +17,7 @@ class ProductProvider with ChangeNotifier {
               id: element.get('id'),
               title: element.get('title'),
               imageUrl: element.get('imageUrl'),
-              productcat: element.get('productCategoryName'),
+              productCat: element.get('productCategoryName'),
               price: element.get('price'),
               salePrice: element.get('salePrice'),
               isOnSale: element.get('isOnSale'),
@@ -29,7 +29,7 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<ProductModels> get getproductList {
+  List<ProductModels> get getProductList {
     return _products;
   }
 
@@ -43,7 +43,7 @@ class ProductProvider with ChangeNotifier {
 
   List<ProductModels> findByCategory(String categoryName) {
     List<ProductModels> categoryList = _products
-        .where((element) => element.productcat
+        .where((element) => element.productCat
             .toLowerCase()
             .contains(categoryName.toLowerCase()))
         .toList();

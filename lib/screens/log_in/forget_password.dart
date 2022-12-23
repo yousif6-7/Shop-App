@@ -21,12 +21,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     _emailController.dispose();
     super.dispose();
   }
+
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoadingManegar(
-
         isLoading: isLoading,
         child: Padding(
           padding: const EdgeInsets.only(top: 50),
@@ -44,7 +44,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ReusibleText(
+                    ReusableText(
                       text: "Welcome",
                       size: 30,
                       textfontWeight: FontWeight.bold,
@@ -71,8 +71,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        forgotPass(
-                        );
+                        forgotPass();
                       },
                       child: const Text('Reset password'),
                     ),
@@ -86,15 +85,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-  Future forgotPass()async {
-    if(_emailController.text.isEmpty || !_emailController.text.contains('@')){
-      Methods.ErrorDailog(subtitle: "Pleas enter a valid email", context: context);
-    }else{
+  Future forgotPass() async {
+    if (_emailController.text.isEmpty || !_emailController.text.contains('@')) {
+      Methods.ErrorDailog(
+          subtitle: "Pleas enter a valid email", context: context);
+    } else {
       setState(() {
-        isLoading= true;
+        isLoading = true;
       });
       try {
-        await authInstance.sendPasswordResetEmail(email: _emailController.text.toLowerCase());
+        await authInstance.sendPasswordResetEmail(
+            email: _emailController.text.toLowerCase());
       } on FirebaseAuthException catch (error) {
         Methods.ErrorDailog(subtitle: '${error.message}', context: context);
         setState(() {

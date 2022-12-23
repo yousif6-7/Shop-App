@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app/consts/widgets.dart';
 import 'package:shop_app/consts/widgets/loading_manegar.dart';
 import 'package:shop_app/providers/google_sign_in_provider.dart';
@@ -10,11 +9,10 @@ import 'package:shop_app/screens/log_in/sign_up_screen.dart';
 import '../../consts/firebase_const.dart';
 import '../../services/fetch_screen.dart';
 import '../../services/methods.dart';
-import '../tab_bar_screen.dart';
 import 'forget_password.dart';
 
 class LogInScreen extends StatefulWidget {
-  LogInScreen({Key? key}) : super(key: key);
+  const LogInScreen({Key? key}) : super(key: key);
 
   @override
   State<LogInScreen> createState() => _LogInScreenState();
@@ -37,7 +35,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final googleProvider = Provider.of<GoogleSignInProvider>(context,listen: false);
+    final googleProvider =
+        Provider.of<GoogleSignInProvider>(context, listen: false);
     return Scaffold(
       body: LoadingManegar(
         isLoading: isLoading,
@@ -52,7 +51,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     padding: EdgeInsets.zero,
                     child: Image.asset('assets/images/clips/login.png'),
                   ),
-                  ReusibleText(
+                  ReusableText(
                     text: "Welcome to our store",
                     size: 30,
                     textfontWeight: FontWeight.bold,
@@ -62,8 +61,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     child: Column(
                       children: [
                         TextFormField(
-                          onEditingComplete: () =>
-                              FocusScope.of(context).requestFocus(_passFocusNode),
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_passFocusNode),
                           textInputAction: TextInputAction.next,
                           controller: _emailController,
                           keyboardType: TextInputType.text,
@@ -152,7 +151,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                     ],
                   ),
-                  ReusibleText(
+                  ReusableText(
                     text: 'or',
                     size: 20,
                   ),
@@ -170,7 +169,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         const SizedBox(
                           width: 10,
                         ),
-                        ReusibleText(text: 'Contenu with google'),
+                        ReusableText(text: 'Contenu with google'),
                       ],
                     ),
                   ),
@@ -200,7 +199,7 @@ class _LogInScreenState extends State<LogInScreen> {
             email: _emailController.text.toLowerCase().trim(),
             password: _passwordController.text.trim());
 
-        if(!mounted)return;
+        if (!mounted) return;
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const FetchScreen()));
       } on FirebaseAuthException catch (error) {
@@ -218,9 +217,8 @@ class _LogInScreenState extends State<LogInScreen> {
           isLoading = false;
         });
       }
-    }else{
+    } else {
       isLoading = false;
-
     }
   }
 }

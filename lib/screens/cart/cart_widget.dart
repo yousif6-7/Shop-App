@@ -3,11 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets.dart';
 import 'package:shop_app/models/cart_models.dart';
 
-import '../../models/producys_models.dart';
 import '../../provider/dark_theme_provider.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/models_provider.dart';
-import '../product_det_screen.dart';
 
 class CartWidget extends StatefulWidget {
   const CartWidget({Key? key, required this.q}) : super(key: key);
@@ -38,7 +36,7 @@ class _CartWidgetState extends State<CartWidget> {
     final cartProvider = Provider.of<CartProvider>(context);
 
     final getCurrentProduct =
-    productProviders.findProductById(cartModelsvar.productid);
+        productProviders.findProductById(cartModelsvar.productid);
 
     int setOfThreeOfSameItem = counter ~/ 3;
     double totalDiscount = 0.0;
@@ -55,8 +53,9 @@ class _CartWidgetState extends State<CartWidget> {
         width: double.maxFinite,
         height: 200,
         decoration: BoxDecoration(
-          color:
-          themeState.getDarkTheme ? const Color(0xFF335171) : const Color(0xFF0ececec),
+          color: themeState.getDarkTheme
+              ? const Color(0xFF335171)
+              : const Color(0xff0ececec),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -85,7 +84,7 @@ class _CartWidgetState extends State<CartWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ReusibleText(
+                ReusableText(
                   text: getCurrentProduct.title,
                   size: 20,
                   textfontWeight: FontWeight.w500,
@@ -122,11 +121,11 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
                 Row(
                   children: [
-                    ReusibleText(
+                    ReusableText(
                       text: 'Total: ',
                       textfontWeight: FontWeight.bold,
                     ),
-                    ReusibleText(
+                    ReusableText(
                       text: 'iq ${totalDiscount.toStringAsFixed(2)}',
                       size: 20,
                       textfontWeight: FontWeight.bold,
@@ -196,13 +195,12 @@ class _CartWidgetState extends State<CartWidget> {
                             : const Color(0xFF001B36),
                       )),
                   Text(
-                    '${counter.toString()}',
+                    counter.toString(),
                     style: TextStyle(
                         color: themeState.getDarkTheme
                             ? const Color(0xFF335171)
                             : const Color(0xFF001B36),
-                        fontSize: 25
-                    ),
+                        fontSize: 25),
                   ),
                   IconButton(
                     onPressed: () {
