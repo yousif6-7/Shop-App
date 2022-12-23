@@ -2,7 +2,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets/feeds_widget.dart';
 import 'package:shop_app/consts/widgets/slider.dart';
@@ -26,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<ProductModels> searchList = [];
-  final box = GetStorage();
   final List<ProductModels> userSearches = [];
 
   // CHECK YOUR SPELLING WELL. IT SHOULD BE _searchController
@@ -68,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     context: context,
                     delegate: SearchClass(
                       userSearches: userSearches,
-                      box: box,
                     ));
               },
             ),
@@ -229,10 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
 class SearchClass extends SearchDelegate<String> {
   List<ProductModels> recentSearch = [];
   final List<ProductModels> userSearches;
-  final GetStorage box;
   SearchClass({
     required this.userSearches,
-    required this.box,
   });
   // create get storage for recent search
 
