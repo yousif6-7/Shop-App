@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/consts/widgets/feeds_widget.dart';
 import 'package:shop_app/consts/widgets/slider.dart';
 import 'package:shop_app/provider/dark_theme_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shop_app/screens/on_sale_screen.dart';
 import 'package:shop_app/screens/winter_catalog.dart';
 
 import '../consts/widgets.dart';
-import '../consts/widgets/heart.dart';
 import '../models/producys_models.dart';
 import '../providers/models_provider.dart';
-import '../providers/wish_list_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -43,9 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Stack(children: [
-          CircleAvatar(),
-        ]),
+        leading: Stack(
+          children: const [
+            CircleAvatar(),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -65,14 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide:
-                          BorderSide(color: Color(0xFF00264D), width: 1),
+                          const BorderSide(color: Color(0xFF00264D), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide:
-                          BorderSide(color: Color(0xFF00264D), width: 1),
+                          const BorderSide(color: Color(0xFF00264D), width: 1),
                     ),
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     suffix: IconButton(
                       onPressed: () {
                         _searchControlar.clear();
@@ -81,13 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(Icons.cancel,
                           color: _searchFocusNode.hasFocus
                               ? Colors.red
-                              : Color(0xFF00264D)),
+                              : const Color(0xFF00264D)),
                     ),
                     hintText: 'Whats on your mind ?',
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextButton(
@@ -114,13 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               //
               Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 width: double.maxFinite,
                 height: 250,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     fit: BoxFit.cover,
                     image: AssetImage(
                       'assets/images/home/homeimg1.jpeg',
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 IconlyLight.arrowRightCircle,
                                 color: themeState.getDarkTheme
                                     ? Colors.white
-                                    : Color(0xFF00264D),
+                                    : const Color(0xFF00264D),
                               ),
                             ),
                           ],
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               ReusibleText(
@@ -173,18 +173,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 size: 20,
                 textfontWeight: FontWeight.w600,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: allproducts.length,
                   itemBuilder: (context, index) {
                     return ChangeNotifierProvider.value(
-                      child: FeedsWidget(),
                       value: allproducts[index],
+                      child: const FeedsWidget(),
                     );
                   },
                 ),

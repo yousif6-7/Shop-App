@@ -8,7 +8,7 @@ import '../providers/models_provider.dart';
 
 class Categories extends StatelessWidget {
   Categories({Key? key, required this.gridText}) : super(key: key);
-  List<Map<String, dynamic>> gridList = [
+  final List<Map<String, dynamic>> gridList = [
     {
       'gridimgpath': 'assets/images/shoes/shoe1.png',
       'gridText': 'shoes',

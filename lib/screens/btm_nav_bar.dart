@@ -2,7 +2,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/consts/widgets.dart';
 import 'package:shop_app/screens/categores.dart';
 import 'package:shop_app/screens/home_screen.dart';
 import 'package:shop_app/screens/user.dart';
@@ -61,8 +60,8 @@ class _BtmNavBarScreenState extends State<BtmNavBarScreen> {
                 borderRadius: BorderRadius.circular(8),
                 badgeContent: FittedBox(
                   child: Text(
-                     cartProvider.getCartItems.length.toString(),
-                    style: TextStyle(color: Colors.white),
+                    cartProvider.getCartItems.length.toString(),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 child: Icon(

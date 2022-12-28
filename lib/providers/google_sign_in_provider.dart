@@ -12,7 +12,6 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   GoogleSignInAccount get user => _user!;
 
-
   Future googleSignIn(context) async {
     final googleSignIn = GoogleSignIn();
     final googleAcount = await googleSignIn.signIn();
@@ -29,19 +28,18 @@ class GoogleSignInProvider extends ChangeNotifier {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => BtmNavBarScreen(),
+              builder: (context) => const BtmNavBarScreen(),
             ),
           );
         } on FirebaseException catch (error) {
           Methods.ErrorDailog(subtitle: '${error.message}', context: context);
-
         } catch (error) {
           Methods.ErrorDailog(subtitle: '$error', context: context);
-
         } finally {}
       }
     }
   }
 
+  @override
   notifyListeners();
 }

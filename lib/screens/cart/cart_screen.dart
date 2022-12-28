@@ -19,7 +19,7 @@ class Cart extends StatelessWidget {
     final cartItemsList =
         cartProvider.getCartItems.values.toList().reversed.toList();
     return cartItemsList.isEmpty
-        ? EmptyScreen(
+        ? const EmptyScreen(
             imagepath: 'assets/images/clips/cart.png',
             title: 'Whoops',
             subtitle: 'Your cart is empty for now ',
@@ -35,9 +35,9 @@ class Cart extends StatelessWidget {
               centerTitle: false,
               actions: [
                 Container(
-                  margin: EdgeInsets.only(right: 10),
+                  margin: const EdgeInsets.only(right: 10),
                   width: 50,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
@@ -53,7 +53,7 @@ class Cart extends StatelessWidget {
                           context: context,
                         );
                       },
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                     ),
                   ),
                 ),
@@ -75,13 +75,12 @@ class Cart extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {},
                           child: Text(
-                             '\$Check out',
+                            '\$Check out',
                             style: TextStyle(
-                              color: themeState.getDarkTheme
-                                  ? Color(0xFF335171)
-                                  : Color(0xFF001B36),
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: themeState.getDarkTheme
+                                    ? const Color(0xFF335171)
+                                    : const Color(0xFF001B36),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -97,10 +96,10 @@ class Cart extends StatelessWidget {
                         itemCount: cartItemsList.length,
                         itemBuilder: (context, index) {
                           return ChangeNotifierProvider.value(
+                            value: cartItemsList[index],
                             child: CartWidget(
                               q: cartItemsList[index].quantity,
                             ),
-                            value: cartItemsList[index],
                           );
                         }),
                   ),
